@@ -40,11 +40,12 @@ RUN dpkg-reconfigure locales
 #RUN /usr/local/bin/virtualenv /opt/jrc --distribute
 
 # Install python packages with pip
+RUN pip install -U pip
 ADD /requirements/ /tmp/requirements/
-RUN pip install -r /tmp/requirements/pre-requirements.txt #--proxy $PROXY
-RUN pip install -r /tmp/requirements/requirements.txt #--proxy $PROXY
+RUN pip install -r /tmp/requirements/pre-requirements.txt
+RUN pip install -r /tmp/requirements/requirements.txt
 #RUN /opt/jrc/bin/pip install --proxy $PROXY -r /tmp/requirements/additional-reqs.txt
-RUN pip install https://github.com/ghislainv/deforestprob/archive/master.zip #--proxy $PROXY
+RUN pip install https://github.com/ghislainv/deforestprob/archive/master.zip
 
 # Install gdal
 #RUN export CPLUS_INCLUDE_PATH=/usr/include/gdal
