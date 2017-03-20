@@ -4,7 +4,7 @@ An easy way to get started with data science, using Docker.  Containers that com
 
 * Run `sh build_container.sh python2` (switch `python2` for another container to build that one`).
     * You can also pull the container by running `docker pull dataquestio/python2-starter`.  Replace `python2` with any other container you want.
-* Run `docker run -d -p 8888:8888 -v ORIGIN_FOLDER:/home/ds/notebooks dataquestio/python2-starter`
+* Run `docker run -d -p 8888:8888 -v ORIGIN_FOLDER:/home/jrc/notebooks ghislainv/docker-debian-jupyter`
     * Replace `python2-starter` with the container you want.
     * Replace `ORIGIN_FOLDER` with a folder on your local machine that you want to persist notebooks in.
 * Open your browser and start working with IPython notebook.
