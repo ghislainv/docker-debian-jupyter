@@ -45,7 +45,7 @@ ADD /requirements/ /tmp/requirements/
 RUN pip install -r /tmp/requirements/pre-requirements.txt
 RUN pip install -r /tmp/requirements/requirements.txt
 #RUN /opt/jrc/bin/pip install --proxy $PROXY -r /tmp/requirements/additional-reqs.txt
-RUN pip install https://github.com/ghislainv/deforestprob/archive/master.zip
+RUN pip install -U https://github.com/ghislainv/deforestprob/archive/master.zip
 
 # Install gdal
 #RUN export CPLUS_INCLUDE_PATH=/usr/include/gdal
