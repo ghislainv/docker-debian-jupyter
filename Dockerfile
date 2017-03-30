@@ -8,6 +8,7 @@ MAINTAINER Ghislain Vieilledent <ghislain.vieilledent@cirad.fr>
 
 # Terminal
 ENV TERM=xterm
+ENV LC_ALL C.UTF-8
 
 # Proxy
 #ENV PROXY="http://10.168.209.73:8012"
@@ -26,33 +27,32 @@ RUN apt-get update \
     && xargs -a /tmp/apt-packages.txt apt-get install -y
 
 # Reconfigure locales
-RUN apt-get install locales -y
-RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen \
-    && locale-gen en_US.UTF-8 \
-    && dpkg-reconfigure locales \
-    && /usr/sbin/update-locale LANG=en_US.UTF-8
-ENV LC_ALL en_US.UTF-8
+RUN dpkg-reconfigure locales \
+    && locale-gen C.UTF-8 \
+    && /usr/sbin/update-locale LANG=C.UTF-8 \
+    && echo "en_US.UTF-8 UTF-8" > /etc/locale.gen \
+    && dpkg-reconfigure locales
 
 # Clean-up
 RUN apt-get autoremove -y \
     && apt-get clean -y
 
 # Install python packages with pip
-RUN pip install --upgrade pip
 ADD /requirements/ /tmp/requirements/
-RUN pip install -r /tmp/requirements/pre-requirements.txt
-RUN pip install -r /tmp/requirements/requirements.txt
+RUN pip install --upgrade pip \
+    && pip install -r /tmp/requirements/pre-requirements.txt \
+    && pip install -r /tmp/requirements/requirements.txt \
+    && RUN pip install --upgrade https://github.com/ghislainv/deforestprob/archive/master.zip
 #RUN pip install --proxy $PROXY -r /tmp/requirements/additional-reqs.txt
-RUN pip install --upgrade https://github.com/ghislainv/deforestprob/archive/master.zip
 
 # Create user
-RUN useradd --create-home --home-dir /home/dockeruser --shell /bin/bash dockeruser
-RUN adduser dockeruser sudo
-RUN echo "dockeruser ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+RUN useradd --create-home --home-dir /home/dockeruser --shell /bin/bash dockeruser \
+    && adduser dockeruser sudo \
+    && echo "dockeruser ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 # Create home with script
 ADD run_ipython.sh /home/dockeruser
-RUN chmod +x /home/dockeruser/run_ipython.sh
-RUN chown dockeruser /home/dockeruser/run_ipython.sh
+RUN chmod +x /home/dockeruser/run_ipython.sh \
+    && chown dockeruser /home/dockeruser/run_ipython.sh
 
 # Prepare notebook
 EXPOSE 8888
