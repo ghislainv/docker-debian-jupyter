@@ -42,7 +42,7 @@ ADD /requirements/ /tmp/requirements/
 RUN pip install --upgrade pip \
     && pip install -r /tmp/requirements/pre-requirements.txt \
     && pip install -r /tmp/requirements/requirements.txt \
-    && RUN pip install --upgrade https://github.com/ghislainv/deforestprob/archive/master.zip
+    && pip install --upgrade https://github.com/ghislainv/deforestprob/archive/master.zip
 #RUN pip install --proxy $PROXY -r /tmp/requirements/additional-reqs.txt
 
 # Create user
