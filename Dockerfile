@@ -6,15 +6,15 @@
 FROM debian:testing
 MAINTAINER Ghislain Vieilledent <ghislain.vieilledent@cirad.fr>
 
-## Configure default locale
-RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen \
-	&& locale-gen en_US.utf8 \
-	&& /usr/sbin/update-locale LANG=en_US.UTF-8
-
-# Environment
-ENV LC_ALL en_US.UTF-8
-ENV LANG en_US.UTF-8
+# Terminal
 ENV TERM=xterm
+
+# Configure default locales
+RUN dpkg-reconfigure locales && \
+    locale-gen C.UTF-8 && \
+    /usr/sbin/update-locale LANG=C.UTF-8
+RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
+RUN dpkg-reconfigure locales
 
 # Proxy
 #ENV PROXY="http://10.168.209.73:8012"
@@ -31,6 +31,14 @@ RUN apt-get update \
     && apt-get upgrade -y \
     && apt-get dist-upgrade -y \
     && xargs -a /tmp/apt-packages.txt apt-get install -y
+
+# Reconfigure locales
+RUN apt-get install -y locales
+RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
+    locale-gen en_US.UTF-8 && \
+    dpkg-reconfigure locales && \
+    /usr/sbin/update-locale LANG=en_US.UTF-8
+ENV LC_ALL en_US.UTF-8
 
 # Clean-up
 RUN apt-get autoremove -y \
