@@ -1,4 +1,4 @@
-Docker container that come preinstalled with Debian 8, Python 2.7, jupyter notebook and key scientific Python packages.
+Docker container that comes preinstalled with Debian testing, Python 2.7, GDAL >= 2.0, Jupyter notebook, and key scientific Python packages.
 
 ## Usage
 
