@@ -3,7 +3,7 @@
 # Debian dockerfile with jupyter notebook
 
 # Base image
-FROM debian:testing
+FROM debian:latest
 MAINTAINER Ghislain Vieilledent <ghislain.vieilledent@cirad.fr>
 
 # Terminal
