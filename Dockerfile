@@ -57,12 +57,12 @@ RUN chmod +x /home/dockeruser/run_ipython.sh \
 # Prepare notebook
 EXPOSE 8888
 USER dockeruser
-RUN mkdir -p /home/dockeruser/notebooks
+RUN mkdir -p /home/dockeruser/deforestprob
 ENV HOME=/home/dockeruser
 ENV SHELL=/bin/bash
 ENV USER=dockeruser
-VOLUME /home/dockeruser/notebooks
-WORKDIR /home/dockeruser/notebooks
+VOLUME /home/dockeruser/deforestprob
+WORKDIR /home/dockeruser/deforestprob
 
 # Run jupyter notebook
 CMD ["/home/dockeruser/run_ipython.sh"]
